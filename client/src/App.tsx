@@ -3,7 +3,7 @@ import Admin from "./pages/Admin";
 import User from "./pages/User";
 import NotFound from "./pages/NotFound";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   return (
