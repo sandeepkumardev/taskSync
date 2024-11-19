@@ -1,8 +1,10 @@
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
-import { createRoom } from "./listeners/createRoom.js";
-import { joinRoom } from "./listeners/joinRoom.js";
+import { createRoom } from "./listeners/createRoom";
+import { joinRoom } from "./listeners/joinRoom";
+import { addTask } from "./listeners/addTask";
+import { clearSeat } from "./listeners/clearSeat";
 
 const app = express();
 const server = createServer(app);
@@ -23,11 +25,14 @@ io.on("connection", (socket) => {
   // Admin creates a room
   socket.on("createRoom", () => createRoom(socket));
 
+  // Admin adds a task
+  socket.on("addTask", (obj) => addTask(io, socket, obj));
+
   // User joins a room
   socket.on("joinRoom", (obj) => joinRoom(socket, obj));
 
   // Admin clears a seat
-  socket.on("clearSeat", (obj) => clearSeat(socket, obj));
+  socket.on("clearSeat", (obj) => clearSeat(io, socket, obj));
 
   socket.on("disconnect", () => {
     console.log("A user disconnected:", socket.id);

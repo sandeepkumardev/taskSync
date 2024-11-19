@@ -1,6 +1,7 @@
-import { rooms } from "../db/index.js";
+import { Socket } from "socket.io";
+import { rooms } from "../db";
 
-export const clearSeat = (socket, obj) => {
+export const clearSeat = (io: any, socket: Socket, obj: any) => {
   try {
     const { roomNo, seatNo } = obj;
     if (!roomNo || !seatNo) {

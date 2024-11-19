@@ -1,6 +1,7 @@
-import { rooms } from "../db/index.js";
+import { Socket } from "socket.io";
+import { rooms } from "../db/index";
 
-export const joinRoom = (socket, obj) => {
+export const joinRoom = (socket: Socket, obj: any) => {
   try {
     const { roomNo, name, seatNo } = obj;
     if (!roomNo || !seatNo) {
@@ -17,7 +18,7 @@ export const joinRoom = (socket, obj) => {
       }
 
       rooms[roomNo].users = [...rooms[roomNo].users, { id: socket.id, name, seatNo }]; // Add user to the room
-      socket.join(roomNo); // User joins the room
+      socket.join(roomNo.toString()); // User joins the room
 
       socket.emit("roomResponse", { ok: true, data: obj });
       socket.emit("tasks", rooms[roomNo].tasks);
