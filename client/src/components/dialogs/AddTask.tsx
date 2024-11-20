@@ -34,7 +34,7 @@ const AddTask = ({ socket, roomID }: { socket: Socket; roomID: string }) => {
             <input
               type="text"
               placeholder="Task Name"
-              className="w-full p-1 px-2 border-2 rounded-md text-black"
+              className="w-full p-1 px-2 border-2 rounded-md bg-background"
               value={task}
               onChange={(e) => setTask(e.target.value)}
             />
