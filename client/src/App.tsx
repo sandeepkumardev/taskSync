@@ -1,3 +1,4 @@
+import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Admin from "./pages/Admin";
 import User from "./pages/User";
@@ -16,7 +17,7 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<Admin />} />
-          <Route path="/room/:roomNumber" element={<User />} />
+          <Route path="/room/:roomID" element={<User />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

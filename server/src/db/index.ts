@@ -1,20 +1,28 @@
 export const rooms: {
-  [key: string]: { admin: string; tasks: ITask[]; responses: IResponse[]; users: IUser[] };
+  [key: string]: { admin: IAdmin; tasks: ITask[]; users: IUser[] };
 } = {};
 
-interface ITask {
+export interface IAdmin {
   id: string;
+  socketID: string;
+}
+
+export interface ITask {
+  id: number;
   task: string;
 }
 
-interface IResponse {
+export interface IUser {
   id: string;
-  taskId: string;
-  response: "DONE" | "ISSUE";
-}
-
-interface IUser {
-  id: string;
+  socketID: string;
   name: string;
   seatNo: number;
+  responses: IResponse[];
+}
+
+export interface IResponse {
+  id: string;
+  userID: string;
+  taskID: string;
+  status: "DONE" | "ISSUE";
 }

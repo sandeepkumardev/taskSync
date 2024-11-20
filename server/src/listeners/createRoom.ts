@@ -5,12 +5,13 @@ import { generateRoomNumber } from "../lib/utils";
 export const createRoom = (socket: Socket) => {
   try {
     const roomNumber = generateRoomNumber();
-    rooms[roomNumber] = { admin: socket.id, tasks: [], responses: [], users: [] };
+    const newUserID = crypto.randomUUID();
+    rooms[roomNumber] = { admin: { id: newUserID, socketID: socket.id }, tasks: [], users: [] };
     console.log(`Room created: ${roomNumber} by ${socket.id}`);
     socket.join(roomNumber.toString()); // Admin joins the room
-    socket.emit("roomResponse", { ok: true, roomNumber });
+    socket.emit("joinRoom", { ok: true, roomID: roomNumber, user: { id: newUserID } });
   } catch (error) {
     console.error("Error creating room:", error);
-    socket.emit("roomResponse", { ok: false, error: "Failed to create room" });
+    socket.emit("joinRoom", { ok: false, error: "Failed to create room" });
   }
 };

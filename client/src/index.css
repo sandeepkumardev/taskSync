@@ -66,4 +66,9 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  [data-sonner-toast] [data-close-button] {
+    background-color: transparent !important;
+    @apply border-muted-foreground;
+  }
 }

@@ -10,7 +10,7 @@ const AddTask = ({ socket, roomID }: { socket: Socket; roomID: string }) => {
 
   const handleAddTask = (e: React.FormEvent) => {
     e.preventDefault();
-    socket.emit("addTask", { roomNumber: roomID, task });
+    socket.emit("addTask", { roomID, task });
     setTask("");
     setIsOpen(false);
   };
@@ -34,7 +34,7 @@ const AddTask = ({ socket, roomID }: { socket: Socket; roomID: string }) => {
             <input
               type="text"
               placeholder="Task Name"
-              className="w-full p-1 px-2 border-2 rounded-md"
+              className="w-full p-1 px-2 border-2 rounded-md text-black"
               value={task}
               onChange={(e) => setTask(e.target.value)}
             />
