@@ -95,7 +95,7 @@ const Admin = () => {
       ) : (
         <div className="flex flex-col items-center justify-end h-full w-full min-w-[300px] mx-auto">
           <img src="/tasksync-bg.png" alt="TaskSync Logo" />
-          <div className="absolute bottom-5">
+          <div className="absolute bottom-5 text-black">
             <Button className="rounded-lg  text-lg" variant={"ringHover"} onClick={handleCreateRoom} disabled={!socketID}>
               Create Room
             </Button>
