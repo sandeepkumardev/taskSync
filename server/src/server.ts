@@ -18,7 +18,13 @@ const server = createServer(app);
 
 const PORT = process.env.PORT || 5500;
 
-const io = new Server(server, { cors: { origin: "*" } });
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CLIENT_URL,
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
 
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
