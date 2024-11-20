@@ -16,6 +16,7 @@ const JoinRoomForm = ({
   isLoading: boolean;
 }) => {
   const [name, setName] = useState<string>("");
+  const [roomId, setRoomId] = useState<string>(roomID);
   const [seatNo, setSeatNo] = useState<string>("");
 
   const handleJoinRoom = (e: React.FormEvent) => {
@@ -54,7 +55,13 @@ const JoinRoomForm = ({
               Room ID
             </Label>
           </div>
-          <Input id="roomNo" placeholder="Room ID" type="number" defaultValue={roomID} disabled />
+          <Input
+            id="roomNo"
+            placeholder="Room ID"
+            type="number"
+            value={roomId}
+            onChange={(e) => setRoomId(e.target.value)}
+          />
         </div>
         <div>
           <div className="mb-1 flex items-center justify-between gap-1 w-full">

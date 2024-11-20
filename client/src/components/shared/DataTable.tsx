@@ -1,7 +1,19 @@
 import { IResponse, ITask, IUser } from "@/types";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import ClearSeat from "../dialogs/ClearSeat";
+import { Socket } from "socket.io-client";
 
-const DataTable = ({ users, tasks, usersResponse }: { users: IUser[]; tasks: ITask[]; usersResponse: IResponse[] }) => {
+const DataTable = ({
+  socket,
+  users,
+  tasks,
+  usersResponse,
+}: {
+  socket: Socket;
+  users: IUser[];
+  tasks: ITask[];
+  usersResponse: IResponse[];
+}) => {
   const getResponseStatus = (userId: string, taskId: string) => {
     const response = usersResponse.find((res) => res.userID === userId && res.taskID === taskId);
     return response ? response.status : "PENDING";
@@ -26,11 +38,14 @@ const DataTable = ({ users, tasks, usersResponse }: { users: IUser[]; tasks: ITa
         <tbody>
           {users.map((user) => (
             <tr key={user.id}>
-              <td className="!text-left px-1 min-w-[80px] max-w-[130px] truncate">
+              <td className="!text-left px-1 min-w-[80px] max-w-[130px] truncate relative group">
                 <HoverCard openDelay={100} closeDelay={10}>
                   <HoverCardTrigger>
                     <span className="font-semibold">{user.seatNo}</span>
                     {user.name && `| ${user.name}`}
+                    <div className="absolute top-[3px] right-[2px] hidden group-hover:block bg-white px-1 rounded-md">
+                      <ClearSeat socket={socket} user={user} />
+                    </div>
                   </HoverCardTrigger>
                   <HoverCardContent className="p-2 px-3 text-left">
                     <span className="font-semibold">{user.seatNo}</span>

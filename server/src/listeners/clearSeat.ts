@@ -3,31 +3,29 @@ import { rooms } from "../db";
 
 export const clearSeat = (io: any, socket: Socket, obj: any) => {
   try {
-    const { roomNo, seatNo } = obj;
-    if (!roomNo || !seatNo) {
-      socket.emit("roomResponse", { ok: false, error: "Please provide Room number and seat number" });
+    const { roomID, seatNo } = obj;
+    if (!roomID || !seatNo) {
       return;
     }
 
-    if (roomNo in rooms) {
-      const user = rooms[roomNo].users.find((user) => user.seatNo === seatNo);
+    if (roomID in rooms) {
+      const user = rooms[roomID].users.find((user) => user.seatNo === seatNo);
       if (user) {
-        rooms[roomNo].users = rooms[roomNo].users.filter((user) => user.seatNo !== seatNo); // Remove user from the room
+        rooms[roomID].users = rooms[roomID].users.filter((user) => user.seatNo !== seatNo); // Remove user from the room
 
-        const userSocket = io.sockets.sockets.get(user.id);
-        userSocket.leave(roomNo); // Remove user from the room
-        console.log(`User ${user.id} removed from room: ${roomNo}`);
+        const userSocket = io.sockets.sockets.get(user.socketID);
+        userSocket.leave(roomID); // Remove user from the room
+        console.log(`User ${user.socketID} removed from room: ${roomID}`);
 
         // Notify the removed user
-        userSocket.emit("removedFromRoom", { ok: true, message: "You have been removed from the room" });
-      }
+        userSocket.emit("removedFromRoom", "You have been removed from the room");
 
-      socket.emit("roomResponse", { ok: true, message: "Seat cleared successfully" });
+        // udpate the admin list of users in the room
+        io.to(rooms[roomID].admin.socketID).emit("users", rooms[roomID].users);
+      }
     } else {
-      socket.emit("roomResponse", { ok: false, error: "Room not found" });
     }
   } catch (error) {
     console.error("Error clearing seat:", error);
-    socket.emit("roomResponse", { ok: false, error: "Failed to clear seat" });
   }
 };

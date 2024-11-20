@@ -86,7 +86,9 @@ const Admin = () => {
           <Separator />
           <div>
             <div className="flex flex-col gap-2 w-full p-2">
-              {(!!tasks.length || !!users.length) && <DataTable users={users} tasks={tasks} usersResponse={usersResponse} />}
+              {(!!tasks.length || !!users.length) && (
+                <DataTable socket={socket} users={users} tasks={tasks} usersResponse={usersResponse} />
+              )}
             </div>
           </div>
         </div>

@@ -31,6 +31,13 @@ const User = () => {
       if (!res || !res.ok) return toast(res.error || "Something went wrong!", { closeButton: true });
       setTasksResponse((res.data as IResponse[]) || []);
     });
+
+    socket.on("removedFromRoom", (msg) => {
+      localStorage.removeItem("roomID");
+      localStorage.removeItem("userID");
+      toast(msg, { duration: 2000, closeButton: true });
+      setTimeout(() => window.location.reload(), 2000);
+    });
   }, []);
 
   return (
