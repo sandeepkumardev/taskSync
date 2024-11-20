@@ -1,3 +1,5 @@
+require("dotenv").config({ path: ".env.local" });
+
 import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
@@ -18,7 +20,7 @@ const PORT = process.env.PORT || 5500;
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     methods: ["GET", "POST"],
     credentials: true,
   },
