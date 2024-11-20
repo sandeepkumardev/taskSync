@@ -18,7 +18,7 @@ const User = () => {
 
   const socket = useMemo(
     () =>
-      io("http://localhost:5500", {
+      io(import.meta.env.VITE_SERVER_URL, {
         withCredentials: true,
       }),
     []
