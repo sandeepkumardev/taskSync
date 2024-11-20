@@ -12,13 +12,7 @@ import { io } from "socket.io-client";
 import { toast } from "sonner";
 
 const Admin = () => {
-  const socket = useMemo(
-    () =>
-      io(import.meta.env.VITE_SERVER_URL, {
-        withCredentials: true,
-      }),
-    []
-  );
+  const socket = useMemo(() => io(import.meta.env.VITE_SERVER_URL), []);
   const { isLoading, socketID, roomID, tasks } = useSocket(socket);
   const [users, setUsers] = useState<IUser[]>([]);
   const [usersResponse, setUsersResponse] = useState<IResponse[]>([]);
